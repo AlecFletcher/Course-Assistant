@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C971.Dashboard"
+             xmlns:models="clr-namespace:C971.Models"
+             Title=""
+             Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="TextColor" Value="{DynamicResource PrimaryDarkText}"/>
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="MaximumHeightRequest" Value="50"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style TargetType="Grid">
+                <Setter Property="RowDefinitions" Value="2*, 1*, 1*, 1*, 1*, 1*, 1*"/>
+                <Setter Property="ColumnDefinitions" Value="4*, 3*"/>
+                <Setter Property="Margin" Value="3"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryDark}"/>
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="LineBreakMode" Value="TailTruncation"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="TextColor" Value="{DynamicResource PrimaryDarkText}"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <NavigationPage.HasNavigationBar>False</NavigationPage.HasNavigationBar>
+    <Grid
+        ColumnDefinitions="*"
+        RowDefinitions="60,60,*">
+        <!-- Header  -->
+        <Grid
+            Grid.Row="0"
+            ColumnDefinitions="1*,2*,1*"
+            RowDefinitions="4*"
+            HeightRequest="60"
+            Margin="3"
+            VerticalOptions="Start"
+            BackgroundColor="White">
+            <Label
+                x:Name="CurrentTermLabel"
+                HorizontalOptions="Center"
+                Grid.Row="0"
+                Grid.Column="1"
+                FontSize="35"
+                Text="{Binding TermName}"
+                FontAttributes="Bold"
+                VerticalOptions="Center"
+                TextColor="{DynamicResource PrimaryDarkText}"/>
+            <Button
+                Margin="10"
+                Padding="2"
+                Clicked="Modify_Button_Clicked"
+                Grid.Row="0"
+                Grid.Column="2"
+                FontAttributes="Bold"
+                FontSize="Caption"
+                Text="Manage Terms"
+                TextColor="{DynamicResource PrimaryDarkText}"
+                BackgroundColor="{DynamicResource Primary}"
+                HeightRequest="40"
+                WidthRequest="100"
+                HorizontalOptions="End">
+            </Button>
+        </Grid>
+
+
+        <!-- NavBar with list of all terms -->
+        <ScrollView
+            Grid.Row="1"
+            Orientation="Horizontal"
+            VerticalOptions="Center"
+            Margin="10">
+            <StackLayout Orientation="Horizontal">
+                <CollectionView
+                    SelectionMode="Single"
+                    x:Name="TermCollectionView"
+                    SelectionChanged="TermCollectionView_SelectionChanged"
+                    x:DataType="models:Term"
+                    HorizontalScrollBarVisibility="Default"
+                    ItemsLayout="HorizontalList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding TermName}" Margin="10,0" FontSize="Large" VerticalOptions="Center"></Label>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
+
+
+
+ 
+
+        <ScrollView
+            Grid.Row="2"
+            x:Name="CourseList"
+            BackgroundColor="{DynamicResource Primary}"
+            BindingContext="{x:Static models:CourseAndAssessment.CourseAndAssessmentList}">
+            <CollectionView
+                x:Name="CourseCollectionView"
+                x:DataType="models:CourseAndAssessment"
+                ItemsSource="{Binding}"
+                SelectionChanged="CourseCollectionView_SelectionChanged"
+                SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="5"
+                            StrokeShape="RoundRectangle 10,10,10,10"
+                            BackgroundColor="{StaticResource PrimaryDark}">
+                            <Grid 
+                            ColumnDefinitions="3*,2*"
+                            RowDefinitions="30,30,30,30,30,30,30,30"
+                            Margin="3">
+                                <Label Text="{Binding Description}" Grid.Column="0" Grid.Row="0" FontAttributes="Bold"></Label>
+                                <Label Text="{Binding Status, StringFormat='Status: {0}'}" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="End"></Label>
+                                <Label Text="{Binding InstructorName, StringFormat='Instructor: {0}'}" Grid.Column="0" Grid.Row="1"></Label>
+                                <Label Text="{Binding InstructorPhoneNum, StringFormat='Phone: {0}'}" Grid.Column="0" Grid.Row="2"></Label>
+                                <Label Text="{Binding InstructorEmail, StringFormat='Email: {0}'}" Grid.Column="0" Grid.Row="3"></Label>
+                                <Label Text="Assessments:" FontAttributes="Bold" Grid.Column="0" Grid.Row="4"></Label>
+                                <Label Text="{Binding AssessmentOneType}" Grid.Column="0" Grid.Row="5"></Label>
+                                <Label Text="{Binding AssessmentTwoType}" Grid.Column="0" Grid.Row="6"></Label>
+                                <Label Text="{Binding StartDate, StringFormat='Start&#160;Date:&#160;{0:M/dd/yy}'}" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="End"></Label>
+                                <Label Text="{Binding EndDate, StringFormat='End&#160;Date:&#160;{0:M/dd/yy}'}" Grid.Column="1" Grid.Row="2" HorizontalTextAlignment="End"></Label>
+                            </Grid>
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </Grid>
+</ContentPage>

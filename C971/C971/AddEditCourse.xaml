@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C971.AddEditCourse"
+             xmlns:models="clr-namespace:C971.Models"
+             Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="Medium"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource PrimaryDarkText}"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout
+        Margin="5"
+        BackgroundColor="{StaticResource Primary}">
+            <Grid         
+                x:Name="CourseCollectionView"
+                x:DataType="models:Course"
+                Margin="5" ColumnDefinitions="3*,4*" RowDefinitions="50,50,50,50,50,50">
+                <Label Text="Course Information" HorizontalTextAlignment="Center" FontSize="Large" FontAttributes="Bold" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"></Label>
+                <Label VerticalTextAlignment="Center" Text=" Course ID:" Grid.Column="0" Grid.Row="1" FontAttributes="Bold"></Label>
+                <Entry VerticalOptions="Center" x:Name="ID_Entry" Text="{Binding CourseID}" Grid.Column="1" Grid.Row="1"></Entry>
+                <Label VerticalTextAlignment="Center" Text="Course Name:" Grid.Column="0" Grid.Row="2" FontAttributes="Bold"></Label>
+                <Entry VerticalOptions="Center" x:Name="Name_Entry" Text="{Binding Name}" Grid.Column="1" Grid.Row="2" CursorPosition="0"></Entry>
+                <Label VerticalTextAlignment="Center" Text="Start Date:" Grid.Column="0" Grid.Row="3" FontAttributes="Bold"></Label>
+                <DatePicker VerticalOptions="Center" x:Name="CourseStartDate_DatePicker" Date="{Binding StartDate}" Grid.Column="1" Grid.Row="3"></DatePicker>
+                <Label VerticalTextAlignment="Center" Text="End Date:" Grid.Column="0" Grid.Row="4" FontAttributes="Bold"></Label>
+                <DatePicker VerticalOptions="Center" x:Name="CourseEndDate_DatePicker" Date="{Binding EndDate}" Grid.Column="1" Grid.Row="4"></DatePicker>
+                <Label VerticalTextAlignment="Center" Text="Status:" Grid.Column="0" Grid.Row="5" FontAttributes="Bold"></Label>
+                <Picker VerticalOptions="Center" SelectedItem="{Binding Status}" x:Name="Status_Picker" Grid.Column="1" Grid.Row="5">
+                    <Picker.Items>
+                        <x:String>In Progress</x:String>
+                        <x:String>Dropped</x:String>
+                        <x:String>Completed</x:String>
+                        <x:String>Plan to take</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Grid>
+
+            <Border
+                        Margin="5,10,5,5"
+                        BackgroundColor="{StaticResource Primary}"
+                        StrokeShape="RoundRectangle 30,30,30,30">
+                <Grid        
+                    x:Name="InstructorCollectionView"
+                    x:DataType="models:Course" Padding="10" ColumnDefinitions="1*,2*" RowDefinitions="50,50,50,50" BackgroundColor="{StaticResource PrimaryDark}">
+                    <Label Text="Instructor Information" FontSize="Large" FontAttributes="Bold" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"></Label>
+                    <Label VerticalTextAlignment="Center" Text="Name:" Grid.Column="0" Grid.Row="1" FontAttributes="Bold"></Label>
+                    <Entry VerticalOptions="Center" x:Name="InsName_Entry" Text="{Binding InstructorName}" Grid.Column="1" Grid.Row="1"></Entry>
+                    <Label VerticalTextAlignment="Center" Text="Phone:" Grid.Column="0" Grid.Row="2" FontAttributes="Bold"></Label>
+                    <Entry VerticalOptions="Center" x:Name="InsPhoneNum_Entry" Text="{Binding InstructorPhoneNum}" Grid.Column="1" Grid.Row="2"></Entry>
+                    <Label VerticalTextAlignment="Center" Text="Email:" Grid.Column="0" Grid.Row="3" FontAttributes="Bold"></Label>
+                    <Entry VerticalOptions="Center" x:Name="InsEmail_Entry" Text="{Binding InstructorEmail}" Grid.Column="1" Grid.Row="3"></Entry>
+                </Grid>
+            </Border>
+
+            <Grid
+                            x:Name="CourseCollectionView1"
+                            x:DataType="models:Course" Padding="10" ColumnDefinitions="3*,1*" RowDefinitions="50,50">
+                <Label Text="Notifications for course start:" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="0" ></Label>
+                <Picker VerticalOptions="Center" SelectedIndex="{Binding StartNotification, FallbackValue=0}" x:Name="CourseStartNotification_Picker" Grid.Column="1" Grid.Row="0">
+                    <Picker.Items>
+                        <x:String>Disabled</x:String>
+                        <x:String>Enabled</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Label VerticalTextAlignment="Center" Text="Notifications for course end:" Grid.Column="0" Grid.Row="1"></Label>
+                <Picker VerticalOptions="Center" SelectedIndex="{Binding EndNotification, FallbackValue=0}" x:Name="CourseEndNotification_Picker" Grid.Column="1" Grid.Row="1">
+                    <Picker.Items>
+                        <x:String>Disabled</x:String>
+                        <x:String>Enabled</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Grid>
+
+
+            <!-- Assessment Section -->
+            <Border
+                    Margin="5,10,5,5"
+                    BackgroundColor="{StaticResource PrimaryDark}"
+                    StrokeShape="RoundRectangle 30,30,30,30">
+                
+                <VerticalStackLayout>
+                    <Label Margin="10" Text="Assessments:" FontSize="Large" Grid.Row="0"></Label>
+                    <Grid x:Name="ObjectiveAssessment_Grid" Padding="10" ColumnDefinitions="3*,1*" RowDefinitions="1*,1*,1*,1*,1*,1*" x:DataType="models:Assessment">
+                        <Label Text="Objective Assessment" VerticalTextAlignment="Center" FontSize="Large" FontAttributes="Bold" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"></Label>
+                        <CheckBox IsChecked="False" Grid.Column="1" Grid.Row="0" WidthRequest="50" x:Name="ObjectiveAssessmentEnabled_Checkbox"></CheckBox>
+                        <Label VerticalOptions="Center" Text="Name" Grid.Column="0" Grid.Row="1" FontAttributes="Bold"></Label>
+                        <Entry VerticalOptions="Center" x:Name="OA_Name" Text="{Binding Name}" Grid.Column="1" Grid.Row="1"></Entry>
+                        <Label VerticalTextAlignment="Center" Text="Start Date:" Grid.Column="0" Grid.Row="2" FontAttributes="Bold"></Label>
+                        <DatePicker VerticalOptions="Center" x:Name="OA_StartDate_DatePicker" Date="{Binding StartDate}" Grid.Column="1" Grid.Row="2"></DatePicker>
+                        <Label VerticalTextAlignment="Center" Text="End Date:" Grid.Column="0" Grid.Row="3" FontAttributes="Bold"></Label>
+                        <DatePicker VerticalOptions="Center" x:Name="OA_EndDate_DatePicker" Date="{Binding EndDate}" Grid.Column="1" Grid.Row="3"></DatePicker>
+                        <Label VerticalOptions="Center" Text="Nofication for assessment start:" Grid.Column="0" Grid.Row="4"></Label>
+                        <Picker VerticalOptions="Center" SelectedIndex="{Binding NotificationStart, FallbackValue='0'}" x:Name="OA_StartNotification_Picker" Grid.Column="1" Grid.Row="4">
+                            <Picker.Items>
+                                <x:String>Disabled</x:String>
+                                <x:String>Enabled</x:String>
+                            </Picker.Items>
+                        </Picker>
+                        <Label VerticalOptions="Center" Text="Nofication for assessment end:" Grid.Column="0" Grid.Row="5"></Label>
+                        <Picker VerticalOptions="Center" SelectedIndex="{Binding NotificationEnd, FallbackValue='0'}" Grid.Column="1" Grid.Row="5" x:Name="OA_EndNotification_Picker">
+                            <Picker.Items>
+                                <x:String>Disabled</x:String>
+                                <x:String>Enabled</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Grid>
+                    <Grid x:Name="PerformanceAssessment_Grid" Padding="10" ColumnDefinitions="3*,1*" RowDefinitions="1*,1*,1*,1*,1*,1*">
+                        <Label Text="Performance Assessment" VerticalTextAlignment="Center" FontSize="Large" FontAttributes="Bold" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"></Label>
+                        <CheckBox IsChecked="False" Grid.Column="1" Grid.Row="0" WidthRequest="50" x:Name="PerformanceAssessmentEnabled_Checkbox"></CheckBox>
+                        <Label VerticalOptions="Center" Text="Name" Grid.Column="0" Grid.Row="1" FontAttributes="Bold"></Label>
+                        <Entry VerticalOptions="Center" x:Name="PA_Name" Text="{Binding Name}" Grid.Column="1" Grid.Row="1"></Entry>
+                        <Label VerticalTextAlignment="Center" Text="Start Date:" Grid.Column="0" Grid.Row="2" FontAttributes="Bold"></Label>
+                        <DatePicker VerticalOptions="Center" x:Name="PA_StartDate_DatePicker" Date="{Binding StartDate}" Grid.Column="1" Grid.Row="2"></DatePicker>
+                        <Label VerticalTextAlignment="Center" Text="End Date:" Grid.Column="0" Grid.Row="3" FontAttributes="Bold"></Label>
+                        <DatePicker VerticalOptions="Center" x:Name="PA_EndDate_DatePicker" Date="{Binding EndDate}" Grid.Column="1" Grid.Row="3"></DatePicker>
+                        <Label VerticalOptions="Center" Text="Nofication for assessment start:" Grid.Column="0" Grid.Row="4"></Label>
+                        <Picker VerticalOptions="Center" SelectedIndex="{Binding NotificationStart, FallbackValue='0'}" x:Name="PA_StartNotification_Picker" Grid.Column="1" Grid.Row="4">
+                            <Picker.Items>
+                                <x:String>Disabled</x:String>
+                                <x:String>Enabled</x:String>
+                            </Picker.Items>
+                        </Picker>
+                        <Label VerticalOptions="Center" Text="Nofication for assessment end:" Grid.Column="0" Grid.Row="5"></Label>
+                        <Picker VerticalOptions="Center" SelectedIndex="{Binding NotificationEnd, FallbackValue='0'}" x:Name="PA_EndNotification_Picker" Grid.Column="1" Grid.Row="5">
+                            <Picker.Items>
+                                <x:String>Disabled</x:String>
+                                <x:String>Enabled</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <Button BackgroundColor="{StaticResource PrimaryDark}" TextColor="{StaticResource PrimaryDarkText}" Margin="10" x:Name="Save_Button" Clicked="SaveButton_Clicked"></Button>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

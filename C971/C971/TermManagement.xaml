@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C971.TermManagement"
+             Title=""
+             xmlns:models="clr-namespace:C971.Models"
+             Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+
+        <ResourceDictionary>
+            <Style TargetType="Grid">
+                <Setter Property="ColumnDefinitions" Value="1*,1*,2*,1*,1*"/>
+                <Setter Property="RowDefinitions" Value="1*,1*,1*,1*"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid
+        BackgroundColor="{StaticResource Primary}"
+        x:Name="MainGrid"
+        ColumnDefinitions="11*,2*"
+        RowDefinitions="10*,1*"
+        Margin="5,0,5,0">
+        <CollectionView
+            HorizontalOptions="Center"
+            Margin="0,10,0,0"
+            SelectionMode="Single"
+            SelectionChanged="TermCollectionView_SelectionChanged"
+            x:Name="TermCollectionView"
+            ItemsSource="{Binding Terms}"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            <CollectionView.ItemTemplate>
+                <DataTemplate
+                    x:DataType="models:Term">
+                    <Border
+                        StrokeShape="RoundRectangle 10,10,10,10"
+                        Margin="5,0"
+                        BackgroundColor="{StaticResource PrimaryDark}">
+                        <Grid
+                            RowDefinitions="1*,1*"
+                            ColumnDefinitions="2*,4*,1*,1*"
+                            Padding="10">
+                            <Label Text="{Binding TermName}" Grid.Column="0" Grid.RowSpan="2" Grid.Row="0" VerticalOptions="Center" FontSize="Medium"></Label>
+                            <Label Text="{Binding StartDate, StringFormat='Start Date: {0:M/dd/yy}'}" Grid.Column="1" Grid.Row="0" HorizontalOptions="CenterAndExpand" FontSize="Medium" Margin="0"></Label>
+                            <Label Text="{Binding EndDate, StringFormat='End Date: {0:M/dd/yy}'}" Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand" FontSize="Medium" Margin="0"></Label>
+                            <ImageButton BindingContext="{Binding}" Clicked="EditButton_Clicked" Source="edit_pencil.png" Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Margin="3" MaximumHeightRequest="60"></ImageButton>
+                            <ImageButton BindingContext="{Binding}" Clicked="DeleteButton_Clicked" Source="trashcan.png" Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" Margin="3" MaximumHeightRequest="60"></ImageButton>
+                        </Grid>
+                    </Border>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout
+                    Orientation="Vertical"
+                    ItemSpacing="15"></LinearItemsLayout>
+            </CollectionView.ItemsLayout>
+
+
+        </CollectionView>
+        <Grid BackgroundColor="White" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ColumnDefinitions="8*,2*,1*" RowDefinitions="1*">
+            <ImageButton Grid.Column="1" Grid.Row="0" Source="plus_symbol.png" VerticalOptions="Start" HorizontalOptions="End" Clicked="AddTermButton_Clicked" Margin="10"></ImageButton>
+        </Grid>
+    </Grid>
+
+</ContentPage>

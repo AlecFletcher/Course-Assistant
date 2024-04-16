@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C971.CourseOverview"
+             xmlns:models="clr-namespace:C971.Models"
+             Loaded="ContentPage_Loaded">
+    <ContentPage.ToolbarItems>
+    <ToolbarItem IconImageSource="edit_pencil.png" Clicked="EditToolBar_Clicked"></ToolbarItem>
+        <ToolbarItem IconImageSource="trashcan.png" Clicked="DeleteToolbar_Clicked"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="Margin" Value="8,0"></Setter>
+                <Setter Property="HorizontalTextAlignment" Value="Start"/>
+                <Setter Property="TextColor" Value="{StaticResource PrimaryDarkText}"/>
+                <Setter Property="LineBreakMode" Value="TailTruncation"></Setter>
+            </Style>
+
+            <Style TargetType="Span">
+                <Setter Property="FontSize" Value="14"></Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout BackgroundColor="{StaticResource Primary}" Margin="5,0">
+        <Label Grid.Column="0" Grid.ColumnSpan="2" x:Name="CourseName_Label" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold"></Label>
+        <CollectionView
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            x:Name="CourseCollectionView"
+            x:DataType="models:Course"
+            Margin="5">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="*" RowDefinitions="*" BackgroundColor="{StaticResource Primary}">
+                        <Grid Grid.Row="0" ColumnDefinitions="5*,3*" RowDefinitions="30,30,30" >
+                            <Label Grid.Column="0" Grid.Row="0">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Instructor Name: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding InstructorName}"></Span>
+
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label x:Name="Status_Label" Grid.Column="1" Grid.Row="0">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Status: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding Status}"></Span>
+
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label x:Name="InstructorPhone_Label" Grid.Column="0" Grid.Row="1">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Instructor Phone: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding InstructorPhoneNum}"></Span>
+
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label x:Name="StartDate_Label" Grid.Column="1" Grid.Row="1">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Start Date: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding StartDate, StringFormat='{0:M/dd/yy}'}"></Span>
+
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label x:Name="InstructorEmail_Label" Grid.Column="0" Grid.Row="2">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Instructor Email: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding InstructorEmail}"></Span>
+
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label x:Name="EndDate_Label" Grid.Column="1" Grid.Row="2">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="End Date: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding EndDate, StringFormat='{0:M/dd/yy}'}"></Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+            <Grid ColumnDefinitions="*,*">
+                <Label Grid.Row="0" Grid.Column="0" Margin="10,10,0,0" Text="Notes:" FontSize="Large" FontAttributes="Bold"></Label>
+                <Button Grid.Row="0" Grid.Column="1" Text="Add Note" Margin="0,0,10,0" Clicked="AddNote_Clicked" VerticalOptions="Center" HorizontalOptions="End" TextColor="{StaticResource PrimaryDarkText}" BackgroundColor="{StaticResource PrimaryDark}"></Button>
+            </Grid>
+
+        <CollectionView
+            x:Name="NotesCollectionView"
+            x:DataType="models:Note"
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        StrokeShape="RoundRectangle 10,10,10,10"
+                        Margin="5,3"
+                        BackgroundColor="{StaticResource PrimaryDark}">
+
+                    <Grid RowDefinitions="1*, 1*, 1*" ColumnDefinitions="7*,1*,1*" Padding="10">
+                                <ImageButton Margin="0,10" Grid.Column="1" Source="edit_pencil.png" Grid.Row="0" HorizontalOptions="End" VerticalOptions="Start" MaximumHeightRequest="60" Clicked="EditNote_Clicked"></ImageButton>
+                                <ImageButton Margin="0,10" Grid.Column="2" Source="trashcan.png" Grid.Row="0" HorizontalOptions="End" VerticalOptions="Start" MaximumHeightRequest="60" Clicked="DeleteNote_Clicked"></ImageButton>
+                                <Button Margin="0,10" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" TextColor="{StaticResource PrimaryDarkText}" BackgroundColor="{StaticResource Primary}" Grid.Row="1" Text="Share" HorizontalOptions="Center" VerticalOptions="Center" MaximumHeightRequest="60" Clicked="ShareButton_Pressed"></Button>
+                                <Label Grid.Row="0" Grid.RowSpan="3" LineBreakMode="CharacterWrap" Text="{Binding NoteText}"></Label>
+                    </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label Grid.Row="4" Text="Assessments:" FontSize="Large" Margin="10,20,0,0" FontAttributes="Bold"></Label>
+        
+        <CollectionView
+            x:Name="AssessmentsCollectionView"
+            x:DataType="models:Assessment"
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        StrokeShape="RoundRectangle 10,10,10,10"
+                        Margin="5,3"
+                        BackgroundColor="{StaticResource PrimaryDark}">
+                        <Grid RowDefinitions="1*,1*,1*,1*,1*,1*" ColumnDefinitions="1*,9*" Margin="10" >
+                            <Label FontAttributes="Bold" Text="{Binding AssessmentType, StringFormat='{0} Assessment'}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"></Label>
+                            <Label Grid.Column="1" Grid.Row="1">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Name: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding Name}"></Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Grid.Column="1" Grid.Row="2">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Start Date: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding StartDate, StringFormat='{0:M/dd/yy}'}"></Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Grid.Column="1" Grid.Row="3">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="End Date: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding EndDate, StringFormat='{0:M/dd/yy}'}"></Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Grid.Column="1" Grid.Row="4">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Notification for start of assessment: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding NotificationStartString}"></Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Grid.Column="1" Grid.Row="5">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Notification for end of assessment: " FontAttributes="Bold"></Span>
+                                        <Span Text="{Binding NotificationEndString}"></Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Grid>
+                    </Border>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

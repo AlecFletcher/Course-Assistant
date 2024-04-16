@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C971.AddEditNote"
+             xmlns:models="clr-namespace:C971.Models"
+             Loaded="ContentPage_Loaded">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="trashcan.png" Clicked="DeleteNote_Clicked"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <VerticalStackLayout>
+        <Grid x:Name="Note_Grid" BackgroundColor="{StaticResource Primary}" Margin="5" x:DataType="models:Note" RowDefinitions="50,300, 50">
+            <Label Grid.Row="0" Text="{Binding CourseId, StringFormat='For course: {0}'}" TextColor="{StaticResource PrimaryDarkText}" FontSize="Large" HorizontalOptions="Center"/>
+            <Editor x:Name="NoteText_Editor" Grid.Row="1" Text="{Binding NoteText}" Margin="10" BackgroundColor="{StaticResource PrimaryDark}"></Editor>
+            <Button Text="Save Note" Clicked="SaveNote_Button" Grid.Row="2" TextColor="{StaticResource PrimaryDarkText}" BackgroundColor="{StaticResource PrimaryDark}" Margin="5"></Button>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

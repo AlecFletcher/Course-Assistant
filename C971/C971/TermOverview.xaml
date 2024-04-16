@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="C971.TermOverview"
+             Loaded="ContentPage_Loaded"
+             xmlns:models="clr-namespace:C971.Models"
+             Title="Term Overview">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="LineBreakMode" Value="TailTruncation"></Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid
+        BackgroundColor="{StaticResource Primary}"
+        ColumnDefinitions="2*,5*,1*"
+        RowDefinitions="1*,8*,1*"
+        Margin="5,0">
+        <Label x:Name="TermName_Label"
+               Grid.Row="0"
+               Grid.Column="0"
+               Grid.ColumnSpan="2"
+               FontSize="Title"
+               FontAttributes="Bold"
+               Margin="10,20,0,0"></Label>
+        <ImageButton Source="edit_pencil.png" Grid.Column="2" Margin="-10,0,10,0" Clicked="ModifyTerm_Clicked"></ImageButton>
+        <CollectionView
+            x:Name="CoursesCollectionView"
+            x:DataType="models:CourseAndAssessment"
+            ItemsSource="{x:Static models:CourseAndAssessment.CourseAndAssessmentList}"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Grid.Row="1"
+            SelectionMode="Single"
+            SelectionChanged="CoursesCollectionView_SelectionChanged">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        StrokeShape="RoundRectangle 10,10,10,10"
+                        Margin="5,3"
+                        Padding="5"
+                        BackgroundColor="{StaticResource PrimaryDark}">
+
+                        <Grid 
+                            ColumnDefinitions="3*,2*"
+                            RowDefinitions="1*,1*,1*,1*,1*,1*,1*"
+                            Margin="3">
+                            <Label Text="{Binding Description}" Grid.Column="0" Grid.Row="0" FontAttributes="Bold">
+                            </Label>
+                            <Label Text="{Binding Status, StringFormat='Status: {0}'}" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="End"></Label>
+                            <Label Text="{Binding InstructorName, StringFormat='Instructor: {0}'}" Grid.Column="0" Grid.Row="1"></Label>
+                            <Label Text="{Binding InstructorPhoneNum, StringFormat='Phone: {0}'}" Grid.Column="0" Grid.Row="2"></Label>
+                            <Label Text="{Binding InstructorEmail, StringFormat='Email: {0}'}" Grid.Column="0" Grid.Row="3"></Label>
+                            <Label Text="Assessments:" FontAttributes="Bold" Grid.Column="0" Grid.Row="4"></Label>
+                            <Label Text="{Binding AssessmentOneType}" Grid.Column="0" Grid.Row="5"></Label>
+                            <Label Text="{Binding AssessmentTwoType}" Grid.Column="0" Grid.Row="6"></Label>
+                            <Label Text="{Binding StartDate, StringFormat='Start&#160;Date:&#160;{0:M/dd/yyyy}'}" Grid.Column="1" Grid.Row="4" HorizontalTextAlignment="End"></Label>
+                            <Label Text="{Binding EndDate, StringFormat='End&#160;Date:&#160;{0:M/dd/yyyy}'}" Grid.Column="1" Grid.Row="5" HorizontalTextAlignment="End"></Label>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Grid BackgroundColor="White" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" ColumnDefinitions="8*,2*,1*" RowDefinitions="1*">
+            <ImageButton Grid.Column="1" Grid.Row="0" Source="plus_symbol.png" VerticalOptions="Start" HorizontalOptions="End" Clicked="AddCourseButton_Clicked" Margin="10"></ImageButton>
+        </Grid>
+    </Grid>
+</ContentPage>
